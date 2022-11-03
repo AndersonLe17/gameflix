@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -19,11 +20,13 @@ export const NavBar = ({ img }) => {
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid="md">
-          <Navbar.Brand href="#home">
-            <img
-              alt=""
-              src={img}
-              className="align-middle" />
+          <Navbar.Brand>
+            <Link to="/">
+              <img
+                alt=""
+                src={img}
+                className="align-middle" />
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse className='justify-content-between mt-1 mt-lg-0' id="navbarScroll">

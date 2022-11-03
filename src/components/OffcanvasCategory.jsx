@@ -3,9 +3,16 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { SiXbox } from "react-icons/si";
 import { MdGames, MdEventSeat, MdSmartToy } from "react-icons/md";
 import { BsFillMouse3Fill, BsHeadphones } from "react-icons/bs";
+import { FaFire } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+
+const links = [{categoria: "Consolas", icon: <SiXbox/>}, {categoria: "Juegos", icon: <MdGames/>}, {categoria: "Perifericos", icon: <BsFillMouse3Fill/>}, 
+{categoria: "Sillas Gamer", icon: <MdEventSeat/>}, {categoria: "Funkos", icon: <MdSmartToy/>}, {categoria: "Audio", icon: <BsHeadphones/>}];
 
 export const OffcanvasCategory = ({show, handleClose}) => {
-  
+  const navigate = useNavigate();
+  const { categoryName } = useParams();
+
   return (
     <>
       <Offcanvas show={show} onHide={handleClose}>
@@ -14,24 +21,18 @@ export const OffcanvasCategory = ({show, handleClose}) => {
         </Offcanvas.Header>
         <Offcanvas.Body className="p-0">
           <ListGroup className="rounded-0">
-            <ListGroup.Item action href="#link1">
-              <SiXbox/> Consolas
+            <ListGroup.Item action onClick={() => navigate("/category/all")} active={(categoryName === "all")}>
+              <FaFire/> Todos los productos
             </ListGroup.Item>
-            <ListGroup.Item action href="#link2">
-              <MdGames/> Juegos
-            </ListGroup.Item>
-            <ListGroup.Item action href="#link3">
-              <BsFillMouse3Fill/> Perifericos
-            </ListGroup.Item>
-            <ListGroup.Item action href="#link4">
-              <MdEventSeat/> Sillas Gamer
-            </ListGroup.Item>
-            <ListGroup.Item action href="#link5">
-              <MdSmartToy/>Funko
-            </ListGroup.Item>
-            <ListGroup.Item action href="#link6">
-              <BsHeadphones/> Audio
-            </ListGroup.Item>
+            
+            {links.map((elemento, index) => {
+              return (
+                <ListGroup.Item key={elemento+index} action onClick={() => navigate(`/category/${elemento.categoria.toLowerCase()}`)} active={(categoryName===elemento.categoria.toLowerCase())}>
+                  {elemento.icon} {elemento.categoria}
+                </ListGroup.Item>
+              );
+            })}
+          
           </ListGroup>
         </Offcanvas.Body>
       </Offcanvas>

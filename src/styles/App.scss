@@ -21,11 +21,25 @@
     }
 }
 
+.banner-section {
+    cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield;
+}
+
 .list-group {
     .list-group-item.active {
         background: #212529;
         border-color: #212529;
     }
+}
+
+.card-item-name {
+    height: 4.25rem;
 }
 
 main {

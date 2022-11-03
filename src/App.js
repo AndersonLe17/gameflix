@@ -1,21 +1,21 @@
-import logo from './logo.svg';
 import './styles/App.scss';
-import {NavBar} from './components/NavBar';
-import {Banner} from './components/Banner';
-import { HeaderInfo } from './components/HeaderInfo';
-import { ItemListContainer } from './components/ItemListContainer';
-import {Footer} from './components/Footer';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from './pages/Home';
+import { Category } from './pages/Category';
+import { Detail } from './pages/Detail';
+
+
 
 function App() {
   return (
     <div className="App">
-      <NavBar img={logo}/>
-      <Banner />
-      <main>
-        <HeaderInfo/>
-        <ItemListContainer greeting="BIENVENIDO A GAMEFLIX"/>
-      </main>
-      <Footer img={logo}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<Home/>} />
+          <Route path={"/category/:categoryName"} element={<Category />} />
+          <Route path={"/product/:productId"} element={<Detail />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
