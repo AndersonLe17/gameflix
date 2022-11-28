@@ -2,24 +2,24 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useState } from "react";
+import { useCartContext } from "../../context/cartContext";
 
-const CartItemCounter = ({qty, stock, id, onChangeQty}) => {
+const CartItemCounter = ({qty, stock, id}) => {
   const [contador, setContador] = useState(qty);
+  const {changeQtyProduct} = useCartContext();
 
   const handleAdd = () => {
     if (contador < stock) {
       setContador(contador + 1);
+      changeQtyProduct(id, contador + 1);
     }
-    console.log(contador);
-    onChangeQty(id,contador);
   };
 
   const handleSubstract = () => {
     if (contador > 1) {
       setContador(contador - 1);
-    };
-    console.log(contador);
-    onChangeQty(id,contador);
+      changeQtyProduct(id, contador - 1);
+    }
   };
 
   return (

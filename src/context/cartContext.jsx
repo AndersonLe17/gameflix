@@ -24,10 +24,14 @@ export const CartProvider = ({ children }) => {
   const removeProduct = (id) => setCart(cart.filter(p => p.id !== id));
 
   const changeQtyProduct = (id, qty) => {
-    const i = cart.findIndex((p) => p.id === id);
-    cart[i].qty = qty;
-    
-    setCart(cart);
+    const newCart = cart.map((p) => {
+      if (p.id === id) {
+        return { ...p, qty };
+      }
+      return p;
+    });
+
+    setCart(newCart);
   }
 
   const getCartQty = () => cart.length;

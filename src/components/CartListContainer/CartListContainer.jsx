@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 const CartListContainer = () => {
   const navigate = useNavigate();
-  const {cart, getTotal, removeProduct, changeQtyProduct} = useCartContext();
+  const {cart, getTotal, removeProduct} = useCartContext();
 
   return (
     <div className="container py-4">
@@ -31,7 +31,7 @@ const CartListContainer = () => {
                   <td><img src={item.imagen} alt={item.nombre}/></td>
                   <td className='text-start'>{item.nombre}</td>
                   <td>S/{item.precio.toFixed(2)}</td>
-                  <td><CartItemCounter qty={item.qty} stock={item.stock} id={item.id} onChangeQty={changeQtyProduct}/></td>
+                  <td><CartItemCounter qty={item.qty} stock={item.stock} id={item.id}/></td>
                   <td>S/{(item.precio * item.qty).toFixed(2)}</td>
                   <td><a href='#' onClick={(e) => {e.preventDefault(); removeProduct(item.id)}}><BsTrash className='text-danger'/></a></td>
                 </tr>
