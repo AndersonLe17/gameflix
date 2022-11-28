@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { SlUser } from "react-icons/sl";
 import { IoGameControllerOutline } from "react-icons/io5";
-import { OffcanvasCategory } from './OffcanvasCategory';
-import { CartWidget } from "./CartWidget";
+import { OffcanvasCategory } from '../OffcanvasCategory';
+import { CartWidget } from "../CartWidget";
 
-export const NavBar = ({ img }) => {
-  
+const NavBar = ({ img }) => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -49,7 +49,7 @@ export const NavBar = ({ img }) => {
                 <IoGameControllerOutline className='fs-2' />
                 <span className='d-block'>Categorias</span>
               </Nav.Link>
-              <Nav.Link href="#" className="text-center align-middle">
+              <Nav.Link onClick={() => navigate("/cart")} className="text-center align-middle position-relative">
                 <CartWidget/>
               </Nav.Link>
             </Nav>
@@ -61,3 +61,5 @@ export const NavBar = ({ img }) => {
     
   );
 };
+
+export default NavBar;

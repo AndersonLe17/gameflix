@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const links = [{categoria: "Consolas", icon: <SiXbox/>}, {categoria: "Juegos", icon: <MdGames/>}, {categoria: "Perifericos", icon: <BsFillMouse3Fill/>}, 
 {categoria: "Sillas Gamer", icon: <MdEventSeat/>}, {categoria: "Funkos", icon: <MdSmartToy/>}, {categoria: "Audio", icon: <BsHeadphones/>}];
 
-export const OffcanvasCategory = ({show, handleClose}) => {
+const OffcanvasCategory = ({show, handleClose}) => {
   const navigate = useNavigate();
   const { categoryName } = useParams();
 
@@ -39,3 +39,5 @@ export const OffcanvasCategory = ({show, handleClose}) => {
     </>
   );
 };
+
+export default OffcanvasCategory;

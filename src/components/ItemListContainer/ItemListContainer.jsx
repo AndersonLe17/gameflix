@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Item } from "./Item";
-import { getProducts } from "../api/products";
-import { Loader } from "./Loader";
+import { Item } from "../Item";
+import { getProducts } from "../../api/products";
+import { Loader } from "../Loader";
 import { useParams } from "react-router-dom";
 
-export const ItemListContainer = () => {
+const ItemListContainer = () => {
   const { categoryName } = useParams();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,11 +26,12 @@ export const ItemListContainer = () => {
         {productos.map((producto) => {
           return (
             <Item key={producto.id}
-              id={producto.id}
-              img={producto.imagen}
-              stock={(producto.stock)}
-              name={producto.nombre}
-              price={producto.precio}
+              // id={producto.id}
+              // img={producto.imagen}
+              // stock={(producto.stock)}
+              // name={producto.nombre}
+              // price={producto.precio}
+              producto={producto}
             />
           );
         })}
@@ -39,3 +40,5 @@ export const ItemListContainer = () => {
     </div>
   );
 };
+
+export default ItemListContainer;

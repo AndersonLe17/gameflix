@@ -1,4 +1,4 @@
-export const Footer = ({img}) => {
+const Footer = ({img}) => {
   return (
     <footer className="bg-dark pt-3">
       <div className="text-center">
@@ -10,3 +10,5 @@ export const Footer = ({img}) => {
     </footer>
   );
 };
+
+export default Footer;

@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useParams } from "react-router-dom";
-import { getProducts, capitalizeCase } from "../api/products";
+import { getProducts, capitalizeCase } from "../../api/products";
 
-export const HeaderInfo = () => {
+const HeaderInfo = () => {
   const { categoryName } = useParams();
   const [resultados, setResultados] = useState(0);
 
@@ -39,3 +39,5 @@ export const HeaderInfo = () => {
     </div>
   );
 };
+
+export default HeaderInfo;

@@ -42,8 +42,23 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {
     height: 4.25rem;
 }
 
+tbody {
+    tr {
+        td {
+            img {
+                width: 6rem;
+            }
+            .input-group {
+                width: 7rem;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
 main {
     background: #F5F5F5;
+    min-height: 75vh;
 }
 
 .indicator {
