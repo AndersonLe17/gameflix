@@ -2,18 +2,56 @@ import Table from 'react-bootstrap/Table';
 import { CartItemCounter } from '../CartItemCounter';
 import { BsTrash } from "react-icons/bs";
 import { useCartContext } from "../../context/cartContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
+import { addOrder } from '../../api/order';
+import { updateManyProducts } from '../../api/products';
+import { ToastMessage } from '../ToastMessage';
 
 const CartListContainer = () => {
-  const navigate = useNavigate();
-  const {cart, getTotal, removeProduct} = useCartContext();
+  const {cart, getTotal, removeProduct, clear} = useCartContext();
+  const [show, setShow] = useState(false);
+  const [toast, setToast] = useState(false);
+  
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
+  const handleCloseToast = () => setToast(false);
+  const handleShowToast = () => setToast(true);
+  
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  
+  const [ticket, setTicket] = useState("");
+  
+  const createOrder = async () => {
+    const items = cart.map(({id, nombre, qty, precio}) => ({id, title: nombre, qty, price: precio}));
+    
+    const order = {
+      buyer: {name, phone, email},
+      items: items,
+      total: (getTotal()).toFixed(2)
+    };
+    
+    setTicket(await addOrder(order));
+    
+    await updateManyProducts(items);
+    
+    clear();
+    handleClose();
+    handleShowToast();
+  };
 
   return (
     <div className="container py-4">
       <h2 className='text-uppercase fw-bold text-center'>Carrito de Compras</h2>
       {(cart.length === 0)? <p className='text-center'>No hay items, Agrega Productos <Link to={"/category/all"}>Aqui</Link></p> : 
-      <>
+      <div>
         <Table className='bg-white' responsive>
           <thead className='text-center'>
             <tr>
@@ -61,10 +99,29 @@ const CartListContainer = () => {
             </tbody>
         </Table>
         <div className='text-center text-md-end'>
-          <Button variant='success' className='w-50'>Procesar</Button>
+          <Button variant='success' className='w-50' onClick={handleShow}>Procesar</Button>
         </div>
-      </>
+      </div>
       }
+      <ToastMessage ticket={ticket} show={toast} handleClose={handleCloseToast}/>
+      
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>
+          <h3 className='text-center '>Procesar Pedido</h3>
+          <div className='row g-3'>
+            <FloatingLabel controlId="iNombres" label="Nombres y Apellidos">
+              <Form.Control type="text" onChange={(e) => setName(e.target.value)} placeholder="Nombres y Apellidos"/>
+            </FloatingLabel>
+            <FloatingLabel controlId="iCelular" label="N° de Celular">
+              <Form.Control type="tel" onChange={(e) => setPhone(e.target.value)} placeholder="N° de Celular"/>
+            </FloatingLabel>
+            <FloatingLabel controlId="iEmail" label="Correo Electronico">
+              <Form.Control type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Correo Electronico"/>
+            </FloatingLabel>
+            <Button variant='success' onClick={createOrder}>Procesar</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
