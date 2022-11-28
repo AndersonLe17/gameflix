@@ -1,3 +1,36 @@
+import { db } from './config';
+import { collection, getDocs, getDoc, doc, query, where } from "firebase/firestore";
+
+const productsRef = collection(db, 'items');
+
+export const capitalizeCase = (string) => {
+  return string.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase());;
+};
+
+export const getProducts = async (categoria) => {
+  const products = [];
+  
+  const q = (categoria !== "all")? query(productsRef, where("categoria", "==", capitalizeCase(categoria)))
+                                  : productsRef;
+  
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    products.push({...doc.data(), id: doc.id })
+  });
+  
+  return products;
+}
+
+export const getProduct = async (productId) => {
+  const document = doc(db, "items", productId);
+  const docSnap = await getDoc(document);
+  
+  if (docSnap.exists()) {
+    return {id: docSnap.id, ...docSnap.data()};
+  }
+  return null;
+}
+  
 const products = [
   {
     id: 1,
@@ -54,25 +87,3 @@ const products = [
     descripcion: "Si a las suaves y acolchadas copas de los audífonos Redragon Hylas H260, le sumas la precisión de audio estéreo, no querrás quitártelos nunca. Los controladores direccionales de neodimio ofrecen una nitidez de sonido única, que se complementa perfectamente con su avanzado aislamiento de ruido pasivo.",
   }
 ];
-
-export const capitalizeCase = (string) => {
-  return string.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase());;
-};
-
-export const getProducts = (categoria) =>
-  new Promise((res, rej) => {
-    const response = categoria !== "all"
-      ? products.filter((p) => p.categoria === capitalizeCase(categoria))
-      : products;
-    setTimeout(() => {
-      res(response);
-    }, 2000);
-  });
-
-export const getProduct = (productId) =>
-  new Promise((res, rej) => {
-    const response = products.find((product) => product.id === +productId);
-    setTimeout(() => {
-      res(response);
-    }, 2000);
-  });
